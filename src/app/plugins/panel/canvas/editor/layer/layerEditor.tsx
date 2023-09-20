@@ -1,6 +1,5 @@
 import { get as lodashGet } from 'lodash';
 
-import { NestedPanelOptions, NestedValueAccess } from '@grafana/data/src/utils/OptionsUIBuilders';
 import { ElementState } from 'app/features/canvas/runtime/element';
 import { FrameState } from 'app/features/canvas/runtime/frame';
 import { Scene } from 'app/features/canvas/runtime/scene';
@@ -11,6 +10,8 @@ import { PlacementEditor } from '../element/PlacementEditor';
 import { optionBuilder } from '../options';
 
 import { TreeNavigationEditor } from './TreeNavigationEditor';
+import { NestedPanelOptions } from 'editor/element/elementEditor';
+import { NestedValueAccess } from 'editor/layer/layerEditor';
 
 export interface LayerEditorProps {
   scene: Scene;

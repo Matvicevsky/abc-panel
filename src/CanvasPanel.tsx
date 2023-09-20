@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { ReplaySubject, Subscription } from 'rxjs';
 
 import { PanelProps } from '@grafana/data';
-import { locationService } from '@grafana/runtime/src';
 import { PanelContext, PanelContextRoot } from '@grafana/ui';
 import { CanvasFrameOptions } from 'app/features/canvas';
 import { ElementState } from './app/features/canvas/runtime/element';
@@ -13,6 +12,7 @@ import { PanelEditEnteredEvent, PanelEditExitedEvent } from 'app/types/events';
 // import { InlineEdit } from './editor/inline/InlineEdit';
 import { Options } from './panelcfg.gen';
 import { AnchorPoint, CanvasTooltipPayload, ConnectionState } from './types';
+import { locationService } from '@grafana/runtime';
 
 interface Props extends PanelProps<Options> {}
 

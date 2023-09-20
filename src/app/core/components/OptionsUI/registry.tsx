@@ -28,7 +28,6 @@ import {
   valueMappingsOverrideProcessor,
 } from '@grafana/data';
 import { RadioButtonGroup, Switch, TimeZonePicker } from '@grafana/ui';
-import { FieldNamePicker } from '@grafana/ui/src/components/MatchersUI/FieldNamePicker';
 import { ThresholdsValueEditor } from 'app/features/dimensions/editors/ThresholdsEditor/thresholds';
 import { ValueMappingsEditor } from 'app/features/dimensions/editors/ValueMappingsEditor/ValueMappingsEditor';
 
@@ -160,7 +159,7 @@ export const getAllOptionEditors = () => {
     id: 'field-name',
     name: 'Field name',
     description: 'Allows selecting a field name from a data frame',
-    editor: FieldNamePicker as any,
+    editor: {} as any,
   };
 
   const dashboardPicker: StandardEditorsRegistryItem<string, DashboardPickerOptions> = {

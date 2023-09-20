@@ -1,11 +1,4 @@
-import {
-  AppEvents,
-  DataSourceApi,
-  DataSourceInstanceSettings,
-  DataSourceRef,
-  DataSourceSelectItem,
-  ScopedVars,
-} from '@grafana/data';
+import { AppEvents, DataSourceApi, DataSourceInstanceSettings, DataSourceSelectItem, ScopedVars } from '@grafana/data';
 import {
   DataSourceSrv as DataSourceService,
   getBackendSrv,
@@ -15,7 +8,7 @@ import {
   getTemplateSrv,
   TemplateSrv,
 } from '@grafana/runtime';
-import { ExpressionDatasourceRef, isExpressionReference } from '@grafana/runtime/src/utils/DataSourceWithBackend';
+// import { ExpressionDatasourceRef, isExpressionReference } from '@grafana/runtime/src/utils/DataSourceWithBackend';
 import appEvents from 'app/core/app_events';
 import config from 'app/core/config';
 import {
@@ -25,6 +18,21 @@ import {
 import { ExpressionDatasourceUID } from 'app/features/expressions/types';
 
 import { importDataSourcePlugin } from './plugin_loader';
+import { DataSourceRef } from '@grafana/schema';
+
+export const ExpressionDatasourceRef = Object.freeze({
+  type: '__expr__',
+  uid: '__expr__',
+  name: 'Expression',
+});
+
+export function isExpressionReference(ref?: DataSourceRef | string | null): boolean {
+  if (!ref) {
+    return false;
+  }
+  const v = typeof ref === 'string' ? ref : ref.type;
+  return v === ExpressionDatasourceRef.type || v === ExpressionDatasourceRef.name || v === '-100'; // -100 was a legacy accident that should be removed
+}
 
 export class DatasourceSrv implements DataSourceService {
   private datasources: Record<string, DataSourceApi> = {}; // UID

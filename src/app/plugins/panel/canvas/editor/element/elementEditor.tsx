@@ -1,6 +1,5 @@
 import { get as lodashGet } from 'lodash';
 
-import { NestedPanelOptions, NestedValueAccess } from '@grafana/data/src/utils/OptionsUIBuilders';
 import {
   CanvasElementOptions,
   canvasElementRegistry,
@@ -16,6 +15,8 @@ import { getElementTypes } from 'utils';
 import { optionBuilder } from '../options';
 
 import { PlacementEditor } from './PlacementEditor';
+import { NestedPanelOptions } from 'editor/element/elementEditor';
+import { NestedValueAccess } from 'editor/layer/layerEditor';
 
 export interface CanvasEditorOptions {
   element: ElementState;

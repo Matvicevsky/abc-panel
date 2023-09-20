@@ -1,7 +1,9 @@
-import { PanelOptionsSupplier } from '@grafana/data/src/panel/PanelPlugin';
+// import { PanelOptionsSupplier } from '@grafana/data/src/panel/PanelPlugin';
 import { CanvasConnection, CanvasElementOptions } from 'app/features/canvas';
 import { ColorDimensionEditor, ResourceDimensionEditor, ScaleDimensionEditor } from 'app/features/dimensions/editors';
 import { BackgroundSizeEditor } from 'app/features/dimensions/editors/BackgroundSizeEditor';
+
+type PanelOptionsSupplier<T> = (builder: any, context: any) => void;
 
 interface OptionSuppliers {
   addBackground: PanelOptionsSupplier<CanvasElementOptions>;

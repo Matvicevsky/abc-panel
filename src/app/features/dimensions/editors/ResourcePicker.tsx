@@ -13,13 +13,27 @@ import {
   useStyles2,
   useTheme2,
 } from '@grafana/ui';
-import { closePopover } from '@grafana/ui/src/utils/closePopover';
+// import { closePopover } from '@grafana/ui/src/utils/closePopover';
 import { SanitizedSVG } from 'app/core/components/SVG/SanitizedSVG';
 
 import { getPublicOrAbsoluteUrl } from '../resource';
 import { MediaType, ResourceFolderName, ResourcePickerSize } from '../types';
 
 import { ResourcePickerPopover } from './ResourcePickerPopover';
+
+export const closePopover = (event: React.KeyboardEvent, hidePopper: () => void) => {
+  if (event.key === 'Tab' || event.altKey || event.ctrlKey || event.metaKey) {
+    return;
+  }
+
+  event.stopPropagation();
+
+  if (event.key === 'Escape') {
+    hidePopper();
+  }
+
+  return;
+};
 
 interface Props {
   onChange: (value?: string) => void;

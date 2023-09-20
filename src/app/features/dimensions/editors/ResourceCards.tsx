@@ -1,3 +1,4 @@
+/* eslint-disable deprecation/deprecation */
 import { css, cx } from '@emotion/css';
 import React, { CSSProperties, memo } from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';

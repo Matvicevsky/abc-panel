@@ -9,10 +9,11 @@ import {
   ScopedVars,
 } from '@grafana/data';
 import { DataSourceWithBackend, getDataSourceSrv, getTemplateSrv } from '@grafana/runtime';
-import { ExpressionDatasourceRef } from '@grafana/runtime/src/utils/DataSourceWithBackend';
+// import { ExpressionDatasourceRef } from '@grafana/runtime';
 
 import { ExpressionQueryEditor } from './ExpressionQueryEditor';
 import { ExpressionDatasourceUID, ExpressionQuery, ExpressionQueryType } from './types';
+import { ExpressionDatasourceRef } from '../plugins/datasource_srv';
 
 /**
  * This is a singleton instance that just pretends to be a DataSource
@@ -34,7 +35,7 @@ export class ExpressionDatasourceApi extends DataSourceWithBackend<ExpressionQue
   getCollapsedText(query: ExpressionQuery) {
     return `Expression: ${query.type}`;
   }
-
+  //@ts-ignore
   query(request: DataQueryRequest<ExpressionQuery>): Observable<DataQueryResponse> {
     let targets = request.targets.map(async (query: ExpressionQuery): Promise<ExpressionQuery> => {
       const ds = await getDataSourceSrv().get(query.datasource);
@@ -47,6 +48,7 @@ export class ExpressionDatasourceApi extends DataSourceWithBackend<ExpressionQue
     });
 
     let sub = from(Promise.all(targets));
+    //@ts-ignore
     return sub.pipe(mergeMap((t) => super.query({ ...request, targets: t })));
   }
 

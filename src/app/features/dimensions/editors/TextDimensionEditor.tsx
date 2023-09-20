@@ -1,14 +1,14 @@
 import React, { useCallback } from 'react';
 
 import {
-  FieldNamePickerConfigSettings,
+  // FieldNamePickerConfigSettings,
   StandardEditorProps,
   StandardEditorsRegistryItem,
   StringFieldConfigSettings,
 } from '@grafana/data';
 import { TextDimensionConfig, TextDimensionMode } from '@grafana/schema';
 import { Button, InlineField, InlineFieldRow, RadioButtonGroup } from '@grafana/ui';
-import { FieldNamePicker } from '@grafana/ui/src/components/MatchersUI/FieldNamePicker';
+// import { FieldNamePicker } from '@grafana/ui/src/components/MatchersUI/FieldNamePicker';
 import { StringValueEditor } from 'app/core/components/OptionsUI/string';
 
 import { TextDimensionOptions } from '../types';
@@ -19,9 +19,9 @@ const textOptions = [
   //  { label: 'Template', value: TextDimensionMode.Template, description: 'use template text' },
 ];
 
-const dummyFieldSettings = {
-  settings: {},
-} as StandardEditorsRegistryItem<string, FieldNamePickerConfigSettings>;
+// const dummyFieldSettings = {
+//   settings: {},
+// } as StandardEditorsRegistryItem<string, FieldNamePickerConfigSettings>;
 
 const dummyStringSettings = {
   settings: {},
@@ -42,15 +42,15 @@ export const TextDimensionEditor = ({ value, context, onChange }: Props) => {
     [onChange, value]
   );
 
-  const onFieldChange = useCallback(
-    (field?: string) => {
-      onChange({
-        ...value,
-        field,
-      });
-    },
-    [onChange, value]
-  );
+  // const onFieldChange = useCallback(
+  //   (field?: string) => {
+  //     onChange({
+  //       ...value,
+  //       field,
+  //     });
+  //   },
+  //   [onChange, value]
+  // );
 
   const onFixedChange = useCallback(
     (fixed = '') => {
@@ -77,12 +77,13 @@ export const TextDimensionEditor = ({ value, context, onChange }: Props) => {
       {mode !== TextDimensionMode.Fixed && (
         <InlineFieldRow>
           <InlineField label="Field" labelWidth={labelWidth} grow={true}>
-            <FieldNamePicker
+            {/* <FieldNamePicker
               context={context}
               value={value.field ?? ''}
               onChange={onFieldChange}
               item={dummyFieldSettings}
-            />
+            /> */}
+            <p>Field Picker</p>
           </InlineField>
         </InlineFieldRow>
       )}

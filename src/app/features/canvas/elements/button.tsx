@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { PluginState } from '@grafana/data/src';
+import { PluginState } from '@grafana/data';
 import { TextDimensionConfig, TextDimensionMode } from '@grafana/schema';
 import { Button } from '@grafana/ui';
 import { DimensionContext } from 'app/features/dimensions/context';

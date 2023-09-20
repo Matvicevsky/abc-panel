@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 
-import { FieldNamePickerConfigSettings, StandardEditorProps, StandardEditorsRegistryItem } from '@grafana/data';
+import { StandardEditorProps } from '@grafana/data';
 import { ResourceDimensionConfig, ResourceDimensionMode } from '@grafana/schema';
 import { InlineField, InlineFieldRow, RadioButtonGroup } from '@grafana/ui';
-import { FieldNamePicker } from '@grafana/ui/src/components/MatchersUI/FieldNamePicker';
+// import { FieldNamePicker } from '@grafana/ui/src/components/MatchersUI/FieldNamePicker';
 
 import { getPublicOrAbsoluteUrl, ResourceFolderName } from '..';
 import { MediaType, ResourceDimensionOptions, ResourcePickerSize } from '../types';
@@ -16,14 +16,14 @@ const resourceOptions = [
   //  { label: 'Mapping', value: ResourceDimensionMode.Mapping, description: 'Map the results of a value to an svg' },
 ];
 
-const dummyFieldSettings = {
-  settings: {},
-} as StandardEditorsRegistryItem<string, FieldNamePickerConfigSettings>;
+// const dummyFieldSettings = {
+//   settings: {},
+// } as StandardEditorsRegistryItem<string, FieldNamePickerConfigSettings>;
 
 export const ResourceDimensionEditor = (
   props: StandardEditorProps<ResourceDimensionConfig, ResourceDimensionOptions, unknown>
 ) => {
-  const { value, context, onChange, item } = props;
+  const { value, onChange, item } = props;
   const labelWidth = 9;
 
   const onModeChange = useCallback(
@@ -36,15 +36,15 @@ export const ResourceDimensionEditor = (
     [onChange, value]
   );
 
-  const onFieldChange = useCallback(
-    (field = '') => {
-      onChange({
-        ...value,
-        field,
-      });
-    },
-    [onChange, value]
-  );
+  // const onFieldChange = useCallback(
+  //   (field = '') => {
+  //     onChange({
+  //       ...value,
+  //       field,
+  //     });
+  //   },
+  //   [onChange, value]
+  // );
 
   const onFixedChange = useCallback(
     (fixed?: string) => {
@@ -86,12 +86,13 @@ export const ResourceDimensionEditor = (
       {mode !== ResourceDimensionMode.Fixed && (
         <InlineFieldRow>
           <InlineField label="Field" labelWidth={labelWidth} grow={true}>
-            <FieldNamePicker
+            {/* <FieldNamePicker
               context={context}
               value={value.field ?? ''}
               onChange={onFieldChange}
               item={dummyFieldSettings}
-            />
+            /> */}
+            <p>Field Picker</p>
           </InlineField>
         </InlineFieldRow>
       )}

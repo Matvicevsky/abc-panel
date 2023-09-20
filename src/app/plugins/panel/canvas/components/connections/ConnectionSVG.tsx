@@ -101,7 +101,7 @@ export const ConnectionSVG = ({ setSVGRef, setLineRef, scene }: Props) => {
   const getRowIndex = (fieldName: string | undefined) => {
     if (fieldName) {
       const series = scene.context.getPanelData()?.series[0];
-      const field = series?.fields.find((f) => (f.name = fieldName));
+      const field = series?.fields.find((f: any) => (f.name = fieldName));
       const data = field?.values;
 
       return data ? data.length - 1 : 0;

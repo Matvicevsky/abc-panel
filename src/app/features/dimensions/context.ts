@@ -1,4 +1,3 @@
-import { PanelData } from '@grafana/data/src';
 import {
   ColorDimensionConfig,
   ResourceDimensionConfig,
@@ -8,6 +7,7 @@ import {
 } from '@grafana/schema';
 
 import { DimensionSupplier } from './types';
+import { PanelData } from '@grafana/data';
 
 export interface DimensionContext {
   getColor(color: ColorDimensionConfig): DimensionSupplier<string>;

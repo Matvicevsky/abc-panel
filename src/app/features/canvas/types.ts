@@ -1,4 +1,4 @@
-import { LinkModel } from '@grafana/data/src';
+import { LinkModel } from '@grafana/data';
 import { ColorDimensionConfig, TextDimensionConfig } from '@grafana/schema';
 import {
   BackgroundConfig,

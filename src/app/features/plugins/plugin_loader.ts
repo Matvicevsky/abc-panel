@@ -42,17 +42,20 @@ systemJSPrototype.resolve = decorateSystemJSResolve.bind(systemJSPrototype, syst
 // Any css files loaded via SystemJS have their styles applied onload.
 systemJSPrototype.onload = decorateSystemJsOnload;
 
-export async function importPluginModule({
-  path,
-  version,
-  isAngular,
-  pluginId,
-}: {
-  path: string;
-  pluginId: string;
-  version?: string;
-  isAngular?: boolean;
-}): Promise<System.Module> {
+export async function importPluginModule(
+  {
+    path,
+    version,
+    isAngular,
+    pluginId,
+  }: {
+    path: string;
+    pluginId: string;
+    version?: string;
+    isAngular?: boolean;
+  }
+  //@ts-ignore
+): Promise<System.Module> {
   if (version) {
     registerPluginInCache({ path, version });
   }

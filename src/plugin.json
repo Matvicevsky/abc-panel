@@ -1,17 +1,17 @@
 {
   "type": "panel",
   "name": "Canvas",
-  "id": "canvas",
+  "id": "canvas-panel",
 
   "info": {
-    "description": "Explicit element placement",
+    "description": "Time based line, area and bar charts",
     "author": {
       "name": "Grafana Labs",
       "url": "https://grafana.com"
     },
     "logos": {
-      "small": "img/icn-canvas.svg",
-      "large": "img/icn-canvas.svg"
+      "small": "img/dashboard.png",
+      "large": "img/dashboard.png"
     }
   }
 }

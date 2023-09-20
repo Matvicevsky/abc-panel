@@ -113,14 +113,14 @@ export function getDataLinks(ctx: DimensionContext, cfg: TextConfig, textData: s
   const links: Array<LinkModel<Field>> = [];
   const linkLookup = new Set<string>();
 
-  frames?.forEach((frame) => {
-    const visibleFields = frame.fields.filter((field) => !Boolean(field.config.custom?.hideFrom?.tooltip));
+  frames?.forEach((frame: any) => {
+    const visibleFields = frame.fields.filter((field: any) => !Boolean(field.config.custom?.hideFrom?.tooltip));
 
-    if (cfg.text?.field && visibleFields.some((f) => getFieldDisplayName(f, frame) === cfg.text?.field)) {
-      const field = visibleFields.filter((field) => getFieldDisplayName(field, frame) === cfg.text?.field)[0];
+    if (cfg.text?.field && visibleFields.some((f: any) => getFieldDisplayName(f, frame) === cfg.text?.field)) {
+      const field = visibleFields.filter((field: any) => getFieldDisplayName(field, frame) === cfg.text?.field)[0];
       if (field?.getLinks) {
         const disp = field.display ? field.display(textData) : { text: `${textData}`, numeric: +textData! };
-        field.getLinks({ calculatedValue: disp }).forEach((link) => {
+        field.getLinks({ calculatedValue: disp }).forEach((link: any) => {
           const key = `${link.title}/${link.href}`;
           if (!linkLookup.has(key)) {
             links.push(link);

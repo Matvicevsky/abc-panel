@@ -29,7 +29,7 @@
   "panels": [
     {
       "datasource": {
-        "type": "marcusolsson-static-datasource",
+        "type": "panel",
         "uid": "P1D2C73DC01F2359B"
       },
       "gridPos": {

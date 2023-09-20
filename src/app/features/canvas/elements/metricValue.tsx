@@ -1,26 +1,70 @@
 import { css } from '@emotion/css';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useObservable } from 'react-use';
 import { of } from 'rxjs';
 
-import { DataFrame, FieldNamePickerConfigSettings, GrafanaTheme2, StandardEditorsRegistryItem } from '@grafana/data';
+import { DataFrame, Field, getFieldDisplayName, GrafanaTheme2 } from '@grafana/data';
 import { TextDimensionMode } from '@grafana/schema';
 import { usePanelContext, useStyles2 } from '@grafana/ui';
-import { FieldNamePicker } from '@grafana/ui/src/components/MatchersUI/FieldNamePicker';
-import { frameHasName, getFrameFieldsDisplayNames } from '@grafana/ui/src/components/MatchersUI/utils';
+// import { FieldNamePicker } from '@grafana/ui/src/components/MatchersUI/FieldNamePicker';
+// import { frameHasName, getFrameFieldsDisplayNames } from '@grafana/ui/src/components/MatchersUI/utils';
 import { DimensionContext } from 'app/features/dimensions/context';
 import { ColorDimensionEditor } from 'app/features/dimensions/editors/ColorDimensionEditor';
 import { TextDimensionEditor } from 'app/features/dimensions/editors/TextDimensionEditor';
 import { getDataLinks } from '../utils/utils';
 
 import { CanvasElementItem, CanvasElementProps, defaultBgColor, defaultTextColor } from '../element';
-import { ElementState } from '../runtime/element';
+// import { ElementState } from '../runtime/element';
 import { Align, TextConfig, TextData, VAlign } from '../types';
 
 // eslint-disable-next-line
-const dummyFieldSettings: StandardEditorsRegistryItem<string, FieldNamePickerConfigSettings> = {
-  settings: {},
-} as StandardEditorsRegistryItem<string, FieldNamePickerConfigSettings>;
+// const dummyFieldSettings: StandardEditorsRegistryItem<string, FieldNamePickerConfigSettings> = {
+//   settings: {},
+// } as StandardEditorsRegistryItem<string, FieldNamePickerConfigSettings>;
+
+export interface FrameFieldsDisplayNames {
+  // The display names
+  display: Set<string>;
+
+  // raw field names (that are explicitly not visible)
+  raw: Set<string>;
+
+  // Field mappings (duplicates are not supported)
+  fields: Map<string, Field>;
+}
+
+export function frameHasName(name: string | undefined, names: FrameFieldsDisplayNames) {
+  if (!name) {
+    return false;
+  }
+  return names.display.has(name) || names.raw.has(name);
+}
+
+export function getFrameFieldsDisplayNames(
+  data: DataFrame[],
+  filter?: (field: Field) => boolean
+): FrameFieldsDisplayNames {
+  const names: FrameFieldsDisplayNames = {
+    display: new Set<string>(),
+    raw: new Set<string>(),
+    fields: new Map<string, Field>(),
+  };
+  for (const frame of data) {
+    for (const field of frame.fields) {
+      if (filter && !filter(field)) {
+        continue;
+      }
+      const disp = getFieldDisplayName(field, frame, data);
+      names.display.add(disp);
+      names.fields.set(disp, field);
+      if (field.name && disp !== field.name) {
+        names.raw.add(field.name);
+        names.fields.set(field.name, field);
+      }
+    }
+  }
+  return names;
+}
 
 const MetricValueDisplay = (props: CanvasElementProps<TextConfig, TextData>) => {
   const { data, isSelected, config } = props;
@@ -62,49 +106,50 @@ const MetricValueDisplay = (props: CanvasElementProps<TextConfig, TextData>) => 
 };
 
 const MetricValueEdit = (props: CanvasElementProps<TextConfig, TextData>) => {
-  let { data, config } = props;
+  let { data } = props;
   const context = usePanelContext();
   let panelData: DataFrame[];
   panelData = context.instanceState?.scene?.data.series;
 
-  const onFieldChange = useCallback(
-    (field: string | undefined) => {
-      let selectedElement: ElementState;
-      selectedElement = context.instanceState?.selected[0];
-      if (selectedElement) {
-        const options = selectedElement.options;
-        selectedElement.onChange({
-          ...options,
-          config: {
-            ...options.config,
-            text: { fixed: '', field: field, mode: TextDimensionMode.Field },
-          },
-          background: {
-            color: { field: field, fixed: options.background?.color?.fixed ?? '' },
-          },
-        });
+  // const onFieldChange = useCallback(
+  //   (field: string | undefined) => {
+  //     let selectedElement: ElementState;
+  //     selectedElement = context.instanceState?.selected[0];
+  //     if (selectedElement) {
+  //       const options = selectedElement.options;
+  //       selectedElement.onChange({
+  //         ...options,
+  //         config: {
+  //           ...options.config,
+  //           text: { fixed: '', field: field, mode: TextDimensionMode.Field },
+  //         },
+  //         background: {
+  //           color: { field: field, fixed: options.background?.color?.fixed ?? '' },
+  //         },
+  //       });
 
-        // Force a re-render (update scene data after config update)
-        const scene = context.instanceState?.scene;
-        if (scene) {
-          scene.editModeEnabled.next(false);
-          scene.updateData(scene.data);
-        }
-      }
-    },
-    [context.instanceState?.scene, context.instanceState?.selected]
-  );
+  //       // Force a re-render (update scene data after config update)
+  //       const scene = context.instanceState?.scene;
+  //       if (scene) {
+  //         scene.editModeEnabled.next(false);
+  //         scene.updateData(scene.data);
+  //       }
+  //     }
+  //   },
+  //   [context.instanceState?.scene, context.instanceState?.selected]
+  // );
 
   const styles = useStyles2(getStyles(data));
   return (
     <div className={styles.inlineEditorContainer}>
       {panelData && (
-        <FieldNamePicker
-          context={{ data: panelData }}
-          value={config.text?.field ?? ''}
-          onChange={onFieldChange}
-          item={dummyFieldSettings}
-        />
+        // <FieldNamePicker
+        //   context={{ data: panelData }}
+        //   value={config.text?.field ?? ''}
+        //   onChange={onFieldChange}
+        //   item={dummyFieldSettings}
+        // />
+        <p>Field Name picker</p>
       )}
     </div>
   );

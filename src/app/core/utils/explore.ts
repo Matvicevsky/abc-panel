@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-imports */
+import moment from 'moment';
 import { nanoid } from '@reduxjs/toolkit';
 import { omit } from 'lodash';
 import { Unsubscribable } from 'rxjs';
@@ -9,6 +11,7 @@ import {
   DataQueryRequest,
   DataSourceApi,
   DataSourceRef,
+  DateTime,
   DefaultTimeZone,
   ExploreUrlState,
   HistoryItem,
@@ -19,7 +22,6 @@ import {
   RawTimeRange,
   TimeRange,
   TimeZone,
-  toURLRange,
   urlUtil,
 } from '@grafana/data';
 import { DataSourceSrv, getDataSourceSrv } from '@grafana/runtime';
@@ -57,6 +59,34 @@ export function generateExploreId() {
   return nanoid(3);
 }
 
+export type URLRangeValue = string | { __brand: 'URL Range Value' };
+
+export type URLRange = {
+  from: URLRangeValue;
+  to: URLRangeValue;
+};
+
+export const isDateTime = (value: unknown): value is DateTime => {
+  return moment.isMoment(value);
+};
+
+export const toURLRange = (range: RawTimeRange): URLRange => {
+  let from = range.from;
+  if (isDateTime(from)) {
+    from = from.valueOf().toString();
+  }
+
+  let to = range.to;
+  if (isDateTime(to)) {
+    to = to.valueOf().toString();
+  }
+
+  return {
+    from,
+    to,
+  };
+};
+
 /**
  * Returns an Explore-URL that contains a panel's queries and the dashboard time range.
  */
@@ -77,6 +107,7 @@ export async function getExploreUrl(args: GetExploreUrlArguments): Promise<strin
   let url: string | undefined;
 
   if (exploreDatasource) {
+    //@ts-ignore
     let state: Partial<ExploreUrlState> = { range: toURLRange(timeRange.raw) };
     if (exploreDatasource.interpolateVariablesInQueries) {
       const scopedVars = panel.scopedVars || {};

@@ -6,7 +6,7 @@ import { first } from 'rxjs/operators';
 import Selecto from 'selecto';
 
 import { AppEvents, GrafanaTheme2, PanelData } from '@grafana/data';
-import { locationService } from '@grafana/runtime/src';
+import { locationService } from '@grafana/runtime';
 import {
   ColorDimensionConfig,
   ResourceDimensionConfig,

@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { GrafanaTheme2 } from '@grafana/data';
 import { isFetchError } from '@grafana/runtime';
-import { Field, IconButton, Input, useStyles2, Text } from '@grafana/ui';
+import { Field, IconButton, Input, useStyles2 } from '@grafana/ui';
 
 export interface Props {
   value: string;
@@ -60,9 +60,7 @@ export const EditableTitle = ({ value, onEdit }: Props) => {
           this is to prevent the title from flickering back to the old value after the user has edited
           caused by the delay between the save completing and the new value being refetched
         */}
-        <Text element="h1" truncate>
-          {localValue}
-        </Text>
+        <h1>{localValue}</h1>
         <IconButton name="pen" size="lg" tooltip="Edit title" onClick={() => setIsEditing(true)} />
       </div>
     </div>
@@ -78,7 +76,6 @@ export const EditableTitle = ({ value, onEdit }: Props) => {
             }
           }}
           // perfectly reasonable to autofocus here since we've made a conscious choice by clicking the edit button
-          // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus
           onBlur={onCommitChange}
           onChange={(event) => setLocalValue(event.currentTarget.value)}

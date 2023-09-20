@@ -4,6 +4,7 @@ import { sandboxPluginDependencies } from '../sandbox/plugin_dependencies';
 
 import { SHARED_DEPENDENCY_PREFIX } from './constants';
 
+//@ts-ignore
 export function buildImportMap(importMap: Record<string, System.Module>) {
   return Object.keys(importMap).reduce<Record<string, string>>((acc, key) => {
     // Use the 'package:' prefix to act as a URL instead of a bare specifier

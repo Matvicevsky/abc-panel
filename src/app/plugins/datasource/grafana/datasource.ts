@@ -76,7 +76,7 @@ export class GrafanaDatasource extends DataSourceWithBackend<GrafanaQuery> {
       queryType: GrafanaQueryType.RandomWalk,
     };
   }
-
+  //@ts-ignore
   query(request: DataQueryRequest<GrafanaQuery>): Observable<DataQueryResponse> {
     const results: Array<Observable<DataQueryResponse>> = [];
     const targets: GrafanaQuery[] = [];
@@ -137,6 +137,7 @@ export class GrafanaDatasource extends DataSourceWithBackend<GrafanaQuery> {
         }
 
         results.push(
+          //@ts-ignore
           getGrafanaLiveSrv().getDataStream({
             key: `${request.requestId}.${counter++}`,
             addr: addr!,
@@ -154,6 +155,7 @@ export class GrafanaDatasource extends DataSourceWithBackend<GrafanaQuery> {
 
     if (targets.length) {
       results.push(
+        //@ts-ignore
         super.query({
           ...request,
           targets,
@@ -262,6 +264,7 @@ export class GrafanaDatasource extends DataSourceWithBackend<GrafanaQuery> {
 
 /** Get the GrafanaDatasource instance */
 export async function getGrafanaDatasource() {
+  //@ts-ignore
   return (await getDataSourceSrv().get('-- Grafana --')) as GrafanaDatasource;
 }
 

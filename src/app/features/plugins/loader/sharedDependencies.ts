@@ -1,3 +1,4 @@
+/* eslint-disable deprecation/deprecation */
 import * as emotion from '@emotion/css';
 import * as emotionReact from '@emotion/react';
 import * as d3 from 'd3';
@@ -62,6 +63,7 @@ const jQueryFlotDeps = [
   'jquery.flot',
 ].reduce((acc, flotDep) => ({ ...acc, [flotDep]: { fakeDep: 1 } }), {});
 
+//@ts-ignore
 export const sharedDependenciesMap: Record<string, System.Module> = {
   '@emotion/css': emotion,
   '@emotion/react': emotionReact,

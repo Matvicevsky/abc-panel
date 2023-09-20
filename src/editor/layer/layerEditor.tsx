@@ -1,6 +1,5 @@
 import { get as lodashGet } from 'lodash';
 
-import { NestedPanelOptions, NestedValueAccess } from '@grafana/data/src/utils/OptionsUIBuilders';
 import { ElementState } from 'app/features/canvas/runtime/element';
 import { FrameState } from 'app/features/canvas/runtime/frame';
 import { Scene } from 'app/features/canvas/runtime/scene';
@@ -11,6 +10,20 @@ import { PlacementEditor } from '../element/PlacementEditor';
 import { optionBuilder } from '../options';
 
 import { TreeNavigationEditor } from './TreeNavigationEditor';
+
+export interface NestedValueAccess {
+  getValue: (path: string) => any;
+  onChange: (path: string, value: any) => void;
+  getContext?: (parent: any) => any;
+}
+
+interface NestedPanelOptions<T = any> {
+  path: string;
+  category?: string[];
+  defaultValue?: any;
+  build: any;
+  values?: (parent: NestedValueAccess) => NestedValueAccess;
+}
 
 export interface LayerEditorProps {
   scene: Scene;
@@ -62,7 +75,7 @@ export function getLayerEditor(opts: InstanceState): NestedPanelOptions<LayerEdi
     }),
 
     // Dynamically fill the selected element
-    build: (builder, context) => {
+    build: (builder: any, context: any) => {
       const currentLayer = scene.currentLayer;
       if (currentLayer && !currentLayer.isRoot()) {
         // TODO: the non-root nav option

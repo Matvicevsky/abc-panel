@@ -1,8 +1,8 @@
-import { PanelOptionsSupplier } from '@grafana/data/src/panel/PanelPlugin';
 import { CanvasConnection, CanvasElementOptions } from 'app/features/canvas';
 import { ColorDimensionEditor, ResourceDimensionEditor, ScaleDimensionEditor } from 'app/features/dimensions/editors';
 import { BackgroundSizeEditor } from 'app/features/dimensions/editors/BackgroundSizeEditor';
 
+type PanelOptionsSupplier<T> = any;
 interface OptionSuppliers {
   addBackground: PanelOptionsSupplier<CanvasElementOptions>;
   addBorder: PanelOptionsSupplier<CanvasElementOptions>;
@@ -18,7 +18,7 @@ const getCategoryName = (str: string, type: string | undefined) => {
 };
 
 export const optionBuilder: OptionSuppliers = {
-  addBackground: (builder, context) => {
+  addBackground: (builder: any, context: any) => {
     const category = getCategoryName('Background', context.options?.type);
     builder
       .addCustomEditor({
@@ -55,7 +55,7 @@ export const optionBuilder: OptionSuppliers = {
       });
   },
 
-  addBorder: (builder, context) => {
+  addBorder: (builder: any, context: any) => {
     const category = getCategoryName('Border', context.options?.type);
     builder.addSliderInput({
       category,
@@ -84,7 +84,7 @@ export const optionBuilder: OptionSuppliers = {
     }
   },
 
-  addColor: (builder, context) => {
+  addColor: (builder: any, context: any) => {
     const category = ['Color'];
     builder.addCustomEditor({
       category,
@@ -100,7 +100,7 @@ export const optionBuilder: OptionSuppliers = {
     });
   },
 
-  addSize: (builder, context) => {
+  addSize: (builder: any, context: any) => {
     const category = ['Size'];
     builder.addCustomEditor({
       category,

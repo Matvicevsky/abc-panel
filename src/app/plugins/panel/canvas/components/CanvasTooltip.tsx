@@ -3,7 +3,7 @@ import { useDialog } from '@react-aria/dialog';
 import { useOverlay } from '@react-aria/overlays';
 import React, { createRef } from 'react';
 
-import { GrafanaTheme2, LinkModel } from '@grafana/data/src';
+import { GrafanaTheme2, LinkModel } from '@grafana/data';
 import { LinkButton, Portal, useStyles2, VerticalGroup, VizTooltipContainer } from '@grafana/ui';
 import { CloseButton } from 'app/core/components/CloseButton/CloseButton';
 import { Scene } from 'app/features/canvas/runtime/scene';

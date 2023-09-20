@@ -2,8 +2,8 @@ import { css } from '@emotion/css';
 import React from 'react';
 
 import { GrafanaTheme2 } from '@grafana/data';
-import { ColorPicker, IconButton, useStyles2, useTheme2 } from '@grafana/ui';
-import { ColorSwatch } from '@grafana/ui/src/components/ColorPicker/ColorSwatch';
+import { ColorPicker, IconButton, useStyles2 } from '@grafana/ui';
+// import { ColorSwatch } from '@grafana/ui/src/components/ColorPicker/ColorSwatch';
 
 export interface ColorValueEditorSettings {
   placeholder?: string;
@@ -26,7 +26,7 @@ interface Props {
  * @alpha
  * */
 export const ColorValueEditor = ({ value, settings, onChange, details }: Props) => {
-  const theme = useTheme2();
+  // const theme = useTheme2();
   const styles = useStyles2(getStyles);
 
   return (
@@ -35,12 +35,12 @@ export const ColorValueEditor = ({ value, settings, onChange, details }: Props) 
         return (
           <div className={styles.spot}>
             <div className={styles.colorPicker}>
-              <ColorSwatch
+              {/* <ColorSwatch
                 ref={ref}
                 onClick={showColorPicker}
                 onMouseLeave={hideColorPicker}
                 color={value ? theme.visualization.getColorByName(value) : theme.components.input.borderColor}
-              />
+              /> */}
             </div>
             {details && (
               <>

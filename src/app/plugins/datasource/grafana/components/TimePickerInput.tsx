@@ -1,12 +1,57 @@
 import { css, cx } from '@emotion/css';
+// eslint-disable-next-line no-restricted-imports
 import { Moment } from 'moment';
 import TimePicker from 'rc-time-picker';
 import React from 'react';
 
-import { GrafanaTheme2 } from '@grafana/data';
+import { GrafanaTheme, GrafanaTheme2 } from '@grafana/data';
 import { FormInputSize, Icon, useStyles2 } from '@grafana/ui';
-import { inputSizes } from '@grafana/ui/src/components/Forms/commonStyles';
-import { focusCss } from '@grafana/ui/src/themes/mixins';
+// import { inputSizes } from '@grafana/ui/src/components/Forms/commonStyles';
+// import { focusCss } from '@grafana/ui/src/themes/mixins';
+
+export const inputSizes = () => {
+  return {
+    sm: css({
+      width: inputSizesPixels('sm'),
+    }),
+    md: css({
+      width: inputSizesPixels('md'),
+    }),
+    lg: css({
+      width: inputSizesPixels('lg'),
+    }),
+    auto: css({
+      width: inputSizesPixels('auto'),
+    }),
+  };
+};
+
+export const inputSizesPixels = (size: string) => {
+  switch (size) {
+    case 'sm':
+      return '200px';
+    case 'md':
+      return '320px';
+    case 'lg':
+      return '580px';
+    case 'auto':
+    default:
+      return 'auto';
+  }
+};
+
+export const focusCss = (theme: GrafanaTheme | GrafanaTheme2) => {
+  const firstColor = theme.colors.text;
+  const secondColor = theme.colors.text;
+
+  return `
+  outline: 2px dotted transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px ${firstColor}, 0 0 0px 4px ${secondColor};
+  transition-property: outline, outline-offset, box-shadow;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);`;
+};
 
 export interface Props {
   onChange: (value: Moment) => void;

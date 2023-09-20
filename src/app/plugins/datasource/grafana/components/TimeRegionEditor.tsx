@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 
 import { getTimeZoneInfo, GrafanaTheme2, SelectableValue } from '@grafana/data';
 import { Button, Field, FieldSet, HorizontalGroup, Select, TimeZonePicker, useStyles2 } from '@grafana/ui';
-import { TimeZoneOffset } from '@grafana/ui/src/components/DateTimePickers/TimeZonePicker/TimeZoneOffset';
-import { TimeZoneTitle } from '@grafana/ui/src/components/DateTimePickers/TimeZonePicker/TimeZoneTitle';
+// import { TimeZoneOffset } from '@grafana/ui/src/components/DateTimePickers/TimeZonePicker/TimeZoneOffset';
+// import { TimeZoneTitle } from '@grafana/ui/src/components/DateTimePickers/TimeZonePicker/TimeZoneTitle';
 import { TimeRegionConfig } from 'app/core/utils/timeRegions';
 // import { getDashboardSrv } from 'app/features/dashboard/services/DashboardSrv';
 
@@ -62,8 +62,10 @@ export const TimeRegionEditor = ({ value, onChange }: Props) => {
   const renderTimezonePicker = () => {
     const timezone = (
       <>
-        <TimeZoneTitle title={timezoneInfo?.name} />
-        <TimeZoneOffset timeZone={value.timezone} timestamp={timestamp} />
+        <p>{timezoneInfo?.name} </p>
+        <p>
+          {value.timezone} {timestamp}
+        </p>
       </>
     );
 

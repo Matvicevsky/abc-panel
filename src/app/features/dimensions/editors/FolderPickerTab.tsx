@@ -75,6 +75,7 @@ export const FolderPickerTab = (props: Props) => {
       getDatasourceSrv()
         .get('-- Grafana --')
         .then((ds) => {
+          //@ts-ignore
           (ds as GrafanaDatasource).listFiles(folder).subscribe({
             next: (frame) => {
               const cards: ResourceItem[] = [];

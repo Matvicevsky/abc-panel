@@ -1,10 +1,64 @@
 import { css } from '@emotion/css';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
-import { GrafanaTheme2, SelectableValue, StandardEditorProps } from '@grafana/data';
+import { DataFrame, Field, GrafanaTheme2, SelectableValue, StandardEditorProps } from '@grafana/data';
 import { ColorDimensionConfig } from '@grafana/schema';
-import { ColorPicker, Select, useStyles2 } from '@grafana/ui';
-import { useFieldDisplayNames, useSelectOptions } from '@grafana/ui/src/components/MatchersUI/utils';
+import { ColorPicker, getFieldTypeIcon, Select, useStyles2 } from '@grafana/ui';
+import { FrameFieldsDisplayNames, getFrameFieldsDisplayNames } from 'app/features/canvas/elements/metricValue';
+// import { useFieldDisplayNames, useSelectOptions } from '@grafana/ui/src/components/MatchersUI/utils';
+
+export function useFieldDisplayNames(data: DataFrame[], filter?: (field: Field) => boolean): FrameFieldsDisplayNames {
+  return useMemo(() => {
+    return getFrameFieldsDisplayNames(data, filter);
+  }, [data, filter]);
+}
+
+export function useSelectOptions(
+  displayNames: FrameFieldsDisplayNames,
+  currentName?: string,
+  firstItem?: SelectableValue<string>,
+  fieldType?: string
+): Array<SelectableValue<string>> {
+  return useMemo(() => {
+    let found = false;
+    const options: Array<SelectableValue<string>> = [];
+    if (firstItem) {
+      options.push(firstItem);
+    }
+    for (const name of displayNames.display) {
+      if (!found && name === currentName) {
+        found = true;
+      }
+      const field = displayNames.fields.get(name);
+      if (!fieldType || fieldType === field?.type) {
+        options.push({
+          value: name,
+          label: name,
+          icon: field ? getFieldTypeIcon(field) : undefined,
+        });
+      }
+    }
+    for (const name of displayNames.raw) {
+      if (!displayNames.display.has(name)) {
+        if (!found && name === currentName) {
+          found = true;
+        }
+        options.push({
+          value: name,
+          label: `${name} (base field name)`,
+        });
+      }
+    }
+
+    if (currentName && !found) {
+      options.push({
+        value: currentName,
+        label: `${currentName} (not found)`,
+      });
+    }
+    return options;
+  }, [displayNames, currentName, firstItem, fieldType]);
+}
 
 const fixedColorOption: SelectableValue<string> = {
   label: 'Fixed color',
